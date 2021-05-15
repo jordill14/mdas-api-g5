@@ -4,7 +4,7 @@ import com.ccm.user.user.domain.aggregate.User;
 import com.ccm.user.user.domain.entities.MessageQueue;
 import com.ccm.user.user.domain.vo.UserId;
 
-public interface SendInterface {
+public interface SendEventInterface {
 
-    public void main(MessageQueue messageQueue);
+    public void sendMessage(MessageQueue messageQueue);
 }

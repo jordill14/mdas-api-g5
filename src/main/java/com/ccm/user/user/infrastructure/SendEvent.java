@@ -13,13 +13,13 @@ import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
 @Named("send")
-public class Send {
+public class SendEvent {
 
     private final static String QUEUE_NAME = "pokemon";
 
     Channel channel;
 
-    public Send() {
+    public SendEvent() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = null;
@@ -31,7 +31,7 @@ public class Send {
         }
     }
 
-    public void main(MessageQueue messageQueue) throws Exception {
+    public void sendMessage(MessageQueue messageQueue) {
         try {
             this.channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             String message = messageQueue.getMessage();

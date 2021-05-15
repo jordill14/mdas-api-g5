@@ -4,7 +4,7 @@ import com.ccm.user.user.domain.entities.FavouritePokemon;
 import com.ccm.user.user.domain.entities.MessageQueue;
 import com.ccm.user.user.domain.exceptions.FavouritePokemonAlreadyExistsException;
 import com.ccm.user.user.domain.exceptions.FavouritePokemonDoesNotExistException;
-import com.ccm.user.user.domain.interfaces.SendInterface;
+import com.ccm.user.user.domain.interfaces.SendEventInterface;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,11 +23,11 @@ public class FavouritePokemons {
 
     @Inject
     @Named("send")
-    private SendInterface sendInterface;
+    private SendEventInterface sendEventInterface;
 
     public void addFavouritePokemonToList(FavouritePokemon pokemon) throws FavouritePokemonAlreadyExistsException {
         existsGuard(pokemon);
-        this.sendInterface.main(new MessageQueue(String.valueOf(pokemon.getFavouritePokemonId().getPokemonId())));
+        this.sendEventInterface.sendMessage(new MessageQueue(String.valueOf(pokemon.getFavouritePokemonId().getPokemonId())));
         this.favouritePokemonList.add(pokemon);
     }
 
