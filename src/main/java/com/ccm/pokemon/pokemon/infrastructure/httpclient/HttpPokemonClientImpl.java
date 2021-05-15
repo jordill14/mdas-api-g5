@@ -2,12 +2,12 @@ package com.ccm.pokemon.pokemon.infrastructure.httpclient;
 
 import com.ccm.pokemon.pokemon.domain.aggregate.Pokemon;
 import com.ccm.pokemon.pokemon.domain.exceptions.NetworkConnectionException;
+import com.ccm.pokemon.pokemon.domain.exceptions.PokemonNotFoundException;
 import com.ccm.pokemon.pokemon.domain.exceptions.TimeoutException;
 import com.ccm.pokemon.pokemon.domain.exceptions.UnknownException;
-import com.ccm.pokemon.pokemon.domain.interfaces.PokemonRepository;
+import com.ccm.pokemon.pokemon.domain.interfaces.HttpPokemonClient;
 import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonId;
 import com.ccm.pokemon.pokemon.infrastructure.parsers.JsonToPokemonParser;
-import com.ccm.pokemon.pokemon.domain.exceptions.PokemonNotFoundException;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,7 +27,7 @@ import java.net.UnknownHostException;
 
 @ApplicationScoped
 @Named("HttpPokemon")
-public class HttpPokemonClientImpl {
+public class HttpPokemonClientImpl implements HttpPokemonClient {
 
     private static final String HOST_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
     private static final double TIMEOUT = 3;
@@ -35,6 +35,7 @@ public class HttpPokemonClientImpl {
     @Inject
     JsonToPokemonParser jsonToPokemonParser;
 
+    @Override
     public Pokemon find(PokemonId pokemonId) throws PokemonNotFoundException, TimeoutException, NetworkConnectionException, UnknownException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet request = new HttpGet(HOST_ENDPOINT + pokemonId.getPokemonId());
