@@ -4,6 +4,7 @@ import com.ccm.pokemon.pokemon.domain.aggregate.Pokemon;
 import com.ccm.pokemon.pokemon.domain.exceptions.NetworkConnectionException;
 import com.ccm.pokemon.pokemon.domain.exceptions.TimeoutException;
 import com.ccm.pokemon.pokemon.domain.exceptions.UnknownException;
+import com.ccm.pokemon.pokemon.domain.interfaces.HttpPokemonClient;
 import com.ccm.pokemon.pokemon.domain.interfaces.PokemonRepository;
 import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonId;
 import com.ccm.pokemon.pokemon.domain.exceptions.PokemonNotFoundException;
@@ -18,7 +19,7 @@ public class PokemonFinder {
 
     @Inject
     @Named("HttpPokemon")
-    HttpPokemonClientImpl httpPokemonClientImpl;
+    HttpPokemonClient httpPokemonClient;
 
     @Inject
     @Named("inMemory")
@@ -28,6 +29,6 @@ public class PokemonFinder {
         if (this.pokemonRepository.exists(pokemonId)) {
             return this.pokemonRepository.find(pokemonId);
         }
-        return this.httpPokemonClientImpl.find(pokemonId);
+        return this.httpPokemonClient.find(pokemonId);
     }
 }
