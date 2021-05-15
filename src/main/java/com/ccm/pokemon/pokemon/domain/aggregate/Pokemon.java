@@ -1,9 +1,6 @@
 package com.ccm.pokemon.pokemon.domain.aggregate;
 
-import com.ccm.pokemon.pokemon.domain.valueObjects.Name;
-import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonId;
-import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonType;
-import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonTypes;
+import com.ccm.pokemon.pokemon.domain.valueObjects.*;
 
 import java.util.Objects;
 
@@ -13,33 +10,41 @@ public class Pokemon {
         this.name = name;
         this.pokemonId = pokemonId;
         this.pokemonTypes = new PokemonTypes();
+        this.incrementFavorite = new CounterFavorite();
     }
 
     public Name getName() {
-        return name;
+        return this.name;
     }
 
     public PokemonId getPokemonId() {
-        return pokemonId;
+        return this.pokemonId;
     }
 
     public PokemonTypes getPokemonTypes() {
-        return pokemonTypes;
+        return this.pokemonTypes;
     }
 
     private Name name;
     private PokemonId pokemonId;
     private PokemonTypes pokemonTypes;
+    private final CounterFavorite incrementFavorite;
 
     public void addPokemonType(PokemonType pokemonType) {
         this.pokemonTypes.addType(pokemonType);
     }
 
+    public void incrementCounter() {
+        this.incrementFavorite.counterFavorite();
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Pokemon pokemon = (Pokemon) o;
-        return name.equals(pokemon.name) && pokemonId.equals(pokemon.pokemonId) && pokemonTypes.equals(pokemon.pokemonTypes);
+        return this.name.equals(pokemon.name) && this.pokemonId.equals(pokemon.pokemonId) && this.pokemonTypes.equals(pokemon.pokemonTypes);
     }
 }

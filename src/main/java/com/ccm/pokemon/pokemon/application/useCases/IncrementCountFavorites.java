@@ -20,7 +20,7 @@ public class IncrementCountFavorites {
     PokemonFavoriteCounter pokemonFavoriteCounter;
 
     public void counterFavorite(int pokemon) throws PokemonNotFoundException, TimeoutException, NetworkConnectionException, UnknownException {
-        this.pokemonFavoriteCounter.counter(new PokemonId(pokemon.getPokemonId()));
+        this.pokemonFavoriteCounter.counter(new PokemonId(pokemon));
     }
 
 }

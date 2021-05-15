@@ -27,7 +27,7 @@ import java.net.UnknownHostException;
 
 @ApplicationScoped
 @Named("HttpPokemon")
-public class HttpPokemonRepository implements PokemonRepository {
+public class HttpPokemonRepository {
 
     private static final String HOST_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
     private static final double TIMEOUT = 3;
@@ -35,7 +35,6 @@ public class HttpPokemonRepository implements PokemonRepository {
     @Inject
     JsonToPokemonParser jsonToPokemonParser;
 
-    @Override
     public Pokemon find(PokemonId pokemonId) throws PokemonNotFoundException, TimeoutException, NetworkConnectionException, UnknownException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet request = new HttpGet(HOST_ENDPOINT + pokemonId.getPokemonId());
@@ -56,7 +55,7 @@ public class HttpPokemonRepository implements PokemonRepository {
             }
 
             JSONObject pokemonResponse = (JSONObject) parser.parse(str);
-            return jsonToPokemonParser.castJsonToPokemon(pokemonResponse);
+            return this.jsonToPokemonParser.castJsonToPokemon(pokemonResponse);
         } catch (ConnectTimeoutException | SocketTimeoutException e) {
             throw new TimeoutException("Timeout period expired. Response took too long to arrive");
         } catch (UnknownHostException e) {
