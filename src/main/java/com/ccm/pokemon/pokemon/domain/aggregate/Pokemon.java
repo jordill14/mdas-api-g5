@@ -13,6 +13,10 @@ public class Pokemon {
         this.incrementFavorite = new CounterFavorite();
     }
 
+    public CounterFavorite getIncrementFavorite() {
+        return this.incrementFavorite;
+    }
+
     public Name getName() {
         return this.name;
     }

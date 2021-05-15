@@ -13,10 +13,11 @@ import javax.inject.Inject;
 
 @ApplicationScoped
 public class GetPokemonUseCase {
+
     @Inject
     PokemonFinder pokemonFinder;
 
     public Pokemon getPokemonByPokemonId (PokemonDto pokemon) throws PokemonNotFoundException, TimeoutException, NetworkConnectionException, UnknownException {
-        return pokemonFinder.findPokemon(new PokemonId(pokemon.getPokemonId()));
+        return this.pokemonFinder.findPokemon(new PokemonId(pokemon.getPokemonId()));
     }
 }

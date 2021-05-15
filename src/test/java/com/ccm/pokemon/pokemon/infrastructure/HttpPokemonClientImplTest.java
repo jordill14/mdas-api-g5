@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
-public class HttpPokemonRepositoryTest {
+public class HttpPokemonClientImplTest {
     @Inject
     PokemonRepository pokemonRepository;
 
@@ -32,7 +32,7 @@ public class HttpPokemonRepositoryTest {
         pokemon.addPokemonType(new PokemonType("poison"));
 
         //When
-        Pokemon retrievedPokemon = pokemonRepository.find(pokemonId);
+        Pokemon retrievedPokemon = this.pokemonRepository.find(pokemonId);
 
         //Then
         Assertions.assertEquals(pokemon, retrievedPokemon);
@@ -47,7 +47,7 @@ public class HttpPokemonRepositoryTest {
         assertThrows(
             com.ccm.pokemon.pokemon.domain.exceptions.PokemonNotFoundException.class,
             () -> {
-                pokemonRepository.find(pokemonId);
+                this.pokemonRepository.find(pokemonId);
             }
         );
     }

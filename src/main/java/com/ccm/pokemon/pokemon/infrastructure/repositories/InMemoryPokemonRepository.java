@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 @ApplicationScoped
 @Named("inMemory")
-public class InMemoryCounterPokemonRepository implements PokemonRepository {
+public class InMemoryPokemonRepository implements PokemonRepository {
 
     List<Pokemon> inMemoryPokemon = new ArrayList<>();
 
@@ -28,10 +28,20 @@ public class InMemoryCounterPokemonRepository implements PokemonRepository {
 
     @Override
     public Pokemon update(Pokemon pokemon) {
-        OptionalInt index = IntStream.range(0, this.inMemoryPokemon.size()).filter(i -> pokemon.getUserId().equals(this.inMemoryPokemon.get(i).getUserId())).findFirst();
+        OptionalInt index = IntStream.range(0, this.inMemoryPokemon.size()).filter(i -> pokemon.getPokemonId().equals(this.inMemoryPokemon.get(i).getPokemonId())).findFirst();
 
         this.inMemoryPokemon.set(index.getAsInt(), pokemon);
         return pokemon;
+    }
+
+    @Override
+    public boolean exists(PokemonId pokemonId) {
+        return this.inMemoryPokemon.stream().anyMatch(x -> x.getPokemonId().equals(pokemonId));
+    }
+
+    @Override
+    public void create(Pokemon pokemon) {
+        this.inMemoryPokemon.add(pokemon);
     }
 
 }

@@ -10,7 +10,6 @@ import com.ccm.pokemon.pokemon.domain.valueObjects.PokemonId;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.file.Files;
 
 public class PokemonFavoriteCounter {
 
@@ -18,11 +17,22 @@ public class PokemonFavoriteCounter {
     @Named("inMemory")
     PokemonRepository pokemonRepository;
 
+    @Inject
+    PokemonFinder pokemonFinder;
+
     public Pokemon counter(PokemonId pokemonId) throws PokemonNotFoundException, TimeoutException, UnknownException, NetworkConnectionException {
 
-        Pokemon pokemon = this.pokemonRepository.find(pokemonId);
+        Pokemon pokemon = this.pokemonFinder.findPokemon(pokemonId);
+
+        if (this.pokemonRepository.exists(pokemonId)) {
+            pokemon = this.pokemonRepository.find(pokemonId);
+            pokemon.incrementCounter();
+            return this.pokemonRepository.update(pokemon);
+
+        }
+        this.pokemonRepository.create(pokemon);
         pokemon.incrementCounter();
-        this.pokemonRepository.update(pokemon);
+        return this.pokemonRepository.update(pokemon);
 
     }
 }

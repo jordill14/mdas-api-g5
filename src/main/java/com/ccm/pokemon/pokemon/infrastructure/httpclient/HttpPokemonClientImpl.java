@@ -1,4 +1,4 @@
-package com.ccm.pokemon.pokemon.infrastructure.repositories;
+package com.ccm.pokemon.pokemon.infrastructure.httpclient;
 
 import com.ccm.pokemon.pokemon.domain.aggregate.Pokemon;
 import com.ccm.pokemon.pokemon.domain.exceptions.NetworkConnectionException;
@@ -27,7 +27,7 @@ import java.net.UnknownHostException;
 
 @ApplicationScoped
 @Named("HttpPokemon")
-public class HttpPokemonRepository {
+public class HttpPokemonClientImpl {
 
     private static final String HOST_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
     private static final double TIMEOUT = 3;

@@ -10,6 +10,10 @@ public class CounterFavorite {
         this.number++;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     private int number;
 
 }
